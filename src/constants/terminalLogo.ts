@@ -1,4 +1,5 @@
-import * as ConsoleGrid from 'console-grid'
+import * as ConsoleGrid from 'console-grid';
+
 const CGS = ConsoleGrid.Style;
 
 export const logo = CGS.red(`

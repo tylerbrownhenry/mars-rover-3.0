@@ -4,19 +4,21 @@
 
 Testing a CLI interface that is a themed like a Mars Rover being remotely driven around on Mars collecting rocks.
 
+This has only been ran on a 2021 Macbook Air.
+
 
 ## Project setup
 
 ```shell
-git clone https://github.com/tylerbrownhenry/mars-lander-2.0.git
-cd mars-lander-2.0
+git clone https://github.com/tylerbrownhenry/mars-rover-3.0.git
+cd mars-rover-3.0
 npm install
+npm run build && npm run start
 ```
 
 ## Project structure
 
 ```
-/
 /dist   <- compiled JavaScript code goes here
 /src    <- TypeScript source code lives here
 /test   <- test files (**.test.ts) live     here
