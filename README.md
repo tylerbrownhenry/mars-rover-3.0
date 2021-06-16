@@ -1,3 +1,10 @@
+## About
+
+![Alt text](assets/screen.jpg?raw=true "CLI")
+
+Testing a CLI interface that is a themed like a Mars Rover being remotely driven around on Mars collecting rocks.
+
+
 ## Project setup
 
 ```shell
@@ -33,6 +40,7 @@ npm script | description
 `serve` | Run TypeScript source code directly with `ts-node`
 `start` | Run compiled JavaScript code
 `test` | Run tests with Mocha
+
 
 ## License
 
