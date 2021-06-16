@@ -1,6 +1,6 @@
 ## About
 
-![Alt text](assets/screen.jpg?raw=true "CLI")
+![Alt text](assets/screen.png?raw=true "CLI")
 
 Testing a CLI interface that is a themed like a Mars Rover being remotely driven around on Mars collecting rocks.
 
