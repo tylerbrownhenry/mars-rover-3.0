@@ -1,8 +1,8 @@
 ## About
 
-![Alt text](assets/screen.png?raw=true "CLI")
+![Screen](assets/screen.gif?raw=true "CLI")
 
-Testing a CLI interface that is a themed like a Mars Rover being remotely driven around on Mars collecting rocks.
+Testing a CLI that is a themed like a Mars Rover being remotely driven around on Mars collecting rocks.
 
 This has only been ran on a 2021 Macbook Air.
 
