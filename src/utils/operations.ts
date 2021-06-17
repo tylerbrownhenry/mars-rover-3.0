@@ -20,7 +20,7 @@ const findPowerMessage = (walle) => {
   const amount = walle.powerLevel / walle.totalPower;
   if (amount < 0.50 && amount >= 0.2) {
     // warning
-    return CGS.bg.yellow(`${walle.powerLevel} Power Running Low`);
+    return CGS.bg.red(`${walle.powerLevel} Power Running Low`);
   } if (amount < 0.25 && walle.powerLevel !== 0) {
     // very low
     return CGS.bg.red(`${walle.powerLevel} Critical Low`);
@@ -40,24 +40,9 @@ const findRockMessage = (walle) => {
 };
 
 export const renderScreen = (walle, grid, miniMap) => {
+  // The space at the top is intended to clear out the previous screen.
+  console.clear();
   console.log(`
-    
-    
-    
-    
-    
-    
-    
-    
-
-
-
-
-
-
-
-
-
     
     ${CGS.red(`
 ╔╦╗╔═╗╦═╗╔═╗  ╦═╗╔═╗╦  ╦╔═╗╦═╗  

@@ -8,57 +8,55 @@ const { logo } = require('../constants/terminalLogo');
 const { centerAlign } = require('../utils/grid');
 const { validateStartingPosition, validateCommands, validateGridSize } = require('./validations');
 const { renderScreen } = require('../utils/operations');
+// TODO - Move Messages
 const messages = {
-    askStartingPosition: (gridSize) => {
-        return readlineSync.question(`
+    askStartingPosition: (gridSize) => readlineSync.question(`
     
         Where would you like to the Rover's starting coordinates and orientation to be? 
           
         ${CGS.cyan(`Coordinates can be any value within your current grid with X values of 0-${gridSize[0]}, Y values 0-${gridSize[1]}.`)}
-        ${CGS.cyan("Orientation values can be N, E, S or W.")}
-        ${CGS.cyan("Example: To start on X:0 Y:0 position, facing North, enter: \"0 0 N\".")}
+        ${CGS.cyan('Orientation values can be N, E, S or W.')}
+        ${CGS.cyan('Example: To start on X:0 Y:0 position, facing North, enter: "0 0 N".')}
         
-        Input: `);
-    },
-    askStartingCommand: () => {
-        return readlineSync.question(`
+        Input: 
+        `),
+    askStartingCommand: () => readlineSync.question(`
 
         What would you like the rover to do?
 
-        ${CGS.cyan("[M]ove Forward, Turn [R]ight, Turn [L]eft, [H]ide Logs, [Q]uit")}
-        ${CGS.cyan("Example: \"M\" or \"MMRMMMRMML\"")}
+        ${CGS.cyan('[M]ove Forward, Turn [R]ight, Turn [L]eft, [H]ide Logs, [Q]uit')}
+        ${CGS.cyan('Example: "M" or "MMRMMMRMML"')}
 
         Input:
-        `);
-    },
-    askGridSize: () => {
-        return readlineSync.question(`
+        `),
+    askGridSize: () => readlineSync.question(`
   
         What size grid would you like to explore? 
           
-        ${CGS.cyan("Please enter 2 numbers for the grid size, seperated by a space.")}
-        ${CGS.cyan(`Example: For a 9x9 grid you would enter \"9 9\".`)}
+        ${CGS.cyan('Please enter 2 numbers for the grid size, seperated by a space.')}
+        ${CGS.cyan('Example: For a 9x9 grid you would enter \"9 9\".')}
       
-        Input: `);
-    },
+        Input: 
+        `),
     intro: () => {
         console.log(align(`${logo}
         Press any key to continue`, centerAlign));
     },
     firstSplash: (host) => {
         console.log(`
-        You are now connected to the ${CGS.bg.green(" Mars Rover ")}! 
+        You are now connected to the ${CGS.bg.green(' Mars Rover ')}! 
         
         View feed on: ${CGS.blue(host)}
         
         Or you can follow the prompts below:
         `);
-    }
+    },
 };
 const askStartingPosition = (walle, grid, miniMap) => {
     // Where should the rover start?
-    const gridSize = walle.gridSize;
+    const { gridSize } = walle;
     const startingPosition = messages.askStartingPosition(gridSize);
+    // TODO - Move
     if (!validateStartingPosition(startingPosition, gridSize)) {
         askStartingPosition(walle, grid, miniMap);
     }
@@ -78,40 +76,47 @@ const askStartingPosition = (walle, grid, miniMap) => {
 };
 const askForStartingCommands = (cb, walle, grid, miniMap) => {
     // Ask what should the Rover do?
+    // TODO - Move
     if (walle.rockCount === walle.totalRocks) {
+        /*eslint-disable */
         const success = readlineSync.question(CGS.bg.green(`
-
-        Urgent Message From Houston:
-
-        "Good job Cadet! You've collected all of the rocks in the area.  Time to move on to the next one!"
-
-        [Q]uit
-
-        Input:
+                                                                                                                                                
+        Urgent Message From Houston:                                                                                                            
+                                                                                                                                                
+        "Good job Cadet! You've collected all of the rocks in the area.  Time to move on to the next one!"                                      
+                                                                                                                                                
+        [Q]uit                                                                                                                                  
+                                                                                                                                                
+        Input:                                                                                                                                  
         `));
+        /* eslint-enable */
         process.exit();
     }
+    // TODO - Move
     if (walle.powerLevel === 0) {
-        const powerOut = readlineSync.question(CGS.bg.red(`
-
-        Urgent Message From Houston:
-
-        "You let the battery run out?! It doesn't take rocket science to read a power gauge!"
-
-        [Q]uit
-
-        Input:
-        `));
+        /*eslint-disable */
+        const powerOut = readlineSync.question(`${CGS.bg.red(`
+  
+    Urgent Message From Houston:                                                                                                            
+                                                                                                                                                
+    "You let the battery run out?! It doesn't take rocket science to read a power gauge!"                                                       
+                                                                                                                                                
+    [Q]uit                                                                                                                                  
+                                                                                                                                                
+    Input:                                                                                                                                  
+    `)}`);
+        /* eslint-enable */
         process.exit();
     }
     const commands = messages.askStartingCommand();
+    // TODO - Validation Logic
     if (commands.length == 0) {
         // Could move these additional validations to the validations files
-        console.log(`${CGS.red("Received a blank entry")}`);
+        console.log(`${CGS.red('Received a blank entry')}`);
         cb(cb, walle, grid, miniMap);
     }
     else if (!validateCommands(commands, false)) {
-        console.log(`${CGS.red("The only valid commands are M, R, or L")}`);
+        console.log(`${CGS.red('The only valid commands are M, R, or L')}`);
         cb(cb, walle, grid, miniMap);
     }
     else {
@@ -152,7 +157,7 @@ exports.askGridSize = (walle, grid, miniMap) => {
 };
 exports.intro = (port, walle, grid, miniMap) => {
     // Intro App
-    const host = "http://localhost:" + port;
+    const host = `http://localhost:${port}`;
     messages.intro();
     readlineSync.question('');
     messages.firstSplash(host);

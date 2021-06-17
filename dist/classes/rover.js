@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const ConsoleGrid = require("console-grid");
+const utils = require("../utils/grid");
 const CGS = ConsoleGrid.Style;
 const { order, defs } = require('../constants/orientations');
 const { actions } = require('../constants/actions');
-const utils = require("../utils/grid");
 class Rover {
     constructor(orientation, position, gridSize) {
         this.moveCount = 0;
@@ -31,7 +31,7 @@ class Rover {
             direction: defs[orientation].symbol,
             orientation,
             actionCount: ++this.actionCount,
-            moveCount: this.moveCount
+            moveCount: this.moveCount,
         };
         this.actions.push(moveLog);
     }
@@ -48,7 +48,6 @@ class Rover {
             return response;
         }
         let collectedMessage = 'Rover';
-        console.log('this.grid[newPosition[0]][newPosition[1]]', this.grid[newPosition[0]][newPosition[1]]);
         if (this.grid[newPosition[0]][newPosition[1]] === CGS.blue(' & ')) {
             this.rockCount++;
             collectedMessage = CGS.green('Found a martian rock! After having');
@@ -60,7 +59,7 @@ class Rover {
         this.grid[this.position[0]][this.position[1]] = CGS.cyan(' . ');
         this.powerLevel--;
         const directionLabel = defs[this.orientation].label.toLowerCase();
-        let message = `${collectedMessage} ${actions['M'].toLowerCase()} one square ${directionLabel}.`;
+        const message = `${collectedMessage} ${actions.M.toLowerCase()} one square ${directionLabel}.`;
         return { result: true, message };
     }
     turnRover(action) {
@@ -68,7 +67,7 @@ class Rover {
         const direction = action === 'R' ? 1 : -1;
         const orientationIndex = order.indexOf(this.orientation);
         const maxIndex = order.length - 1;
-        let newOrientationIndex = orientationIndex + direction;
+        const newOrientationIndex = orientationIndex + direction;
         if (newOrientationIndex < 0) {
             // Turning N => W
             this.orientation = order[3];
@@ -83,26 +82,23 @@ class Rover {
         }
         return {
             result: true,
-            message: `Rover ${actions[action].toLowerCase()} 90 degrees.`
+            message: `Rover ${actions[action].toLowerCase()} 90 degrees.`,
         };
     }
     moveRover(action) {
         if (action === 'M') {
             // Movng forward
             return this.moveForward();
-            ;
         }
-        else if (action === "L" || action === "R") {
+        if (action === 'L' || action === 'R') {
             // Changing Direction
             return this.turnRover(action);
         }
-        else if (action === 'H') {
+        if (action === 'H') {
             this.hideLogs = !this.hideLogs;
             return { result: true, message: 'Logs toggled' };
         }
-        else {
-            return { result: false, message: 'Invalid command' };
-        }
+        return { result: false, message: 'Invalid command' };
     }
 }
 exports.Rover = Rover;

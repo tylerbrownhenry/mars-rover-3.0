@@ -8,6 +8,7 @@ const { centerAlign } = require('../utils/grid');
 const { validateStartingPosition, validateCommands, validateGridSize } = require('./validations');
 const { renderScreen } = require('../utils/operations');
 
+// TODO - Move Messages
 const messages = {
   askStartingPosition: (gridSize) => readlineSync.question(`
     
@@ -17,7 +18,8 @@ const messages = {
         ${CGS.cyan('Orientation values can be N, E, S or W.')}
         ${CGS.cyan('Example: To start on X:0 Y:0 position, facing North, enter: "0 0 N".')}
         
-        Input: `),
+        Input: 
+        `),
   askStartingCommand: () => readlineSync.question(`
 
         What would you like the rover to do?
@@ -34,7 +36,8 @@ const messages = {
         ${CGS.cyan('Please enter 2 numbers for the grid size, seperated by a space.')}
         ${CGS.cyan('Example: For a 9x9 grid you would enter \"9 9\".')}
       
-        Input: `),
+        Input: 
+        `),
   intro: () => {
     console.log(align(`${logo}
         Press any key to continue`, centerAlign));
@@ -55,6 +58,7 @@ const askStartingPosition = (walle, grid, miniMap) => {
   const { gridSize } = walle;
   const startingPosition = messages.askStartingPosition(gridSize);
 
+  // TODO - Move
   if (!validateStartingPosition(startingPosition, gridSize)) {
     askStartingPosition(walle, grid, miniMap);
   } else {
@@ -75,36 +79,45 @@ const askStartingPosition = (walle, grid, miniMap) => {
 const askForStartingCommands = (cb, walle, grid, miniMap) => {
   // Ask what should the Rover do?
 
+  // TODO - Move
   if (walle.rockCount === walle.totalRocks) {
+    /*eslint-disable */
     const success = readlineSync.question(CGS.bg.green(`
-
-        Urgent Message From Houston:
-
-        "Good job Cadet! You've collected all of the rocks in the area.  Time to move on to the next one!"
-
-        [Q]uit
-
-        Input:
+                                                                                                                                                
+        Urgent Message From Houston:                                                                                                            
+                                                                                                                                                
+        "Good job Cadet! You've collected all of the rocks in the area.  Time to move on to the next one!"                                      
+                                                                                                                                                
+        [Q]uit                                                                                                                                  
+                                                                                                                                                
+        Input:                                                                                                                                  
         `));
+    /* eslint-enable */
+
     process.exit();
   }
 
+  // TODO - Move
   if (walle.powerLevel === 0) {
-    const powerOut = readlineSync.question(CGS.bg.red(`
+    /*eslint-disable */
+    const powerOut = readlineSync.question(`${CGS.bg.red(`
+  
+    Urgent Message From Houston:                                                                                                            
+                                                                                                                                                
+    "You let the battery run out?! It doesn't take rocket science to read a power gauge!"                                                       
+                                                                                                                                                
+    [Q]uit                                                                                                                                  
+                                                                                                                                                
+    Input:                                                                                                                                  
+    `)}`);
+    /* eslint-enable */
 
-        Urgent Message From Houston:
-
-        "You let the battery run out?! It doesn't take rocket science to read a power gauge!"
-
-        [Q]uit
-
-        Input:
-        `));
     process.exit();
   }
 
   const commands = messages.askStartingCommand();
 
+  // TODO - Validation Logic
   if (commands.length == 0) {
     // Could move these additional validations to the validations files
     console.log(`${CGS.red('Received a blank entry')}`);

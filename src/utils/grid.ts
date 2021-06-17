@@ -3,7 +3,7 @@ import * as ConsoleGrid from 'console-grid';
 const CGS = ConsoleGrid.Style;
 const { defs } = require('../constants/orientations');
 
-export const checkEdges = (gridSize, newPosition) => {
+export const checkEdges = (gridSize: number[], newPosition: number[]) => {
   // are we headed off the edge of flat mars?
   const maxLat = gridSize[0] - 1;
   const maxLong = gridSize[1] - 1;
@@ -12,7 +12,7 @@ export const checkEdges = (gridSize, newPosition) => {
   if (x < 0 || y < 0 || x > maxLat || y > maxLong) {
     return { result: false, message: 'Rover was denied an attempted to move outside of the grid.' };
   }
-  return { result: true };
+  return { result: true, message: 'Inside bounds' };
 };
 
 export const centerAlign = (len, longest) => Math.floor((longest - len) / 2);
@@ -38,7 +38,7 @@ export const createMiniMapColumns = (walle) => {
   return columns;
 };
 
-const findTerrain = (walle, e, i) => {
+export const findTerrain = (walle, e, i) => {
   // Randomly place rocks at every 3 places
   if (!walle.grid[e]) {
     walle.grid[e] = [];
@@ -56,7 +56,9 @@ const findTerrain = (walle, e, i) => {
 };
 
 export const createMiniMapRows = (walle) => {
-  // This is only complicated because am trying to add the column headers on the top and left side of grid.
+  // Most of the logic may loook complicated
+  // but it is only because I was trying to add the legends
+  // on the top and left side of grid.
   const rows = [];
   const max = walle.gridSize[1];
   const maxCol = walle.gridSize[0];

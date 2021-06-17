@@ -12,17 +12,15 @@ exports.checkEdges = (gridSize, newPosition) => {
     if (x < 0 || y < 0 || x > maxLat || y > maxLong) {
         return { result: false, message: 'Rover was denied an attempted to move outside of the grid.' };
     }
-    return { result: true };
+    return { result: true, message: 'Inside bounds' };
 };
-exports.centerAlign = (len, longest) => {
-    return Math.floor((longest - len) / 2);
-};
+exports.centerAlign = (len, longest) => Math.floor((longest - len) / 2);
 exports.createMiniMapColumns = (walle) => {
     const columns = [{
             id: 'title',
             name: '',
             maxWidth: 23,
-            type: "string",
+            type: 'string',
         }];
     const max = walle.gridSize[0];
     let i = 0;
@@ -31,13 +29,13 @@ exports.createMiniMapColumns = (walle) => {
             id: `col_${i}`,
             name: `${i}`,
             maxWidth: 23,
-            type: "string",
+            type: 'string',
         });
         i++;
     }
     return columns;
 };
-const findTerrain = (walle, e, i) => {
+exports.findTerrain = (walle, e, i) => {
     // Randomly place rocks at every 3 places
     if (!walle.grid[e]) {
         walle.grid[e] = [];
@@ -54,13 +52,15 @@ const findTerrain = (walle, e, i) => {
     return walle.grid[e][i];
 };
 exports.createMiniMapRows = (walle) => {
-    // This is only complicated because am trying to add the column headers on the top and left side of grid.
+    // Most of the logic may loook complicated
+    // but it is only because I was trying to add the legends
+    // on the top and left side of grid.
     const rows = [];
     const max = walle.gridSize[1];
     const maxCol = walle.gridSize[0];
     let i = 0;
     while (i !== max) {
-        let thisRow = {
+        const thisRow = {
             label: { r: i },
             maxWidth: 13,
         };
@@ -79,7 +79,7 @@ exports.createMiniMapRows = (walle) => {
                     char = CGS.bg.green(` ${defs[walle.orientation].symbol} `);
                 }
                 else {
-                    char = findTerrain(walle, e, realRow);
+                    char = exports.findTerrain(walle, e, realRow);
                 }
             }
             thisRow[id] = char;

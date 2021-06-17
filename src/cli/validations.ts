@@ -6,9 +6,10 @@ const CGS = ConsoleGrid.Style;
 const { order } = require('../constants/orientations');
 const { actions, customCommands } = require('../constants/actions');
 
+// TODO - Could be prettier
 const messages = {
   startingPosition: {
-    tooShort: (startingPosition) => {
+    tooShort: (startingPosition: string) => {
       console.log(`${CGS.red(`Entry is too short: ${startingPosition}`)}`);
     },
     invalid: (startingPosition) => {
@@ -23,17 +24,17 @@ const messages = {
 
   },
   gridSize: {
-    tooManyArguments: (gridSize) => {
+    tooManyArguments: (gridSize: string) => {
       console.log(`${CGS.red(`Too many arguments, please provide only 2 numbers separated by a space: ${gridSize}`)}`);
     },
-    valueTooLow: (gridSize) => {
+    valueTooLow: (gridSize: string) => {
       console.log(`${CGS.red(`Values most be greater than 0: ${gridSize}`)}`);
     },
     largeArea: (gridSize) => readlineSync.question('Some features are limited to a smaller grid sizes than what was enter, but you may still continue, would you like to proceed with your entry? [Y]es [N]o'),
   },
 };
 
-export const validateStartingPosition = (startingPosition: string, gridSize: string) => {
+export const validateStartingPosition = (startingPosition: string, gridSize: number[]) => {
   if (startingPosition.length < 3) {
     return messages.startingPosition.tooShort(startingPosition);
   }
@@ -49,12 +50,12 @@ export const validateStartingPosition = (startingPosition: string, gridSize: str
   return true;
 };
 
-export const validateCommands = (commands, promptCommands) => {
-  commands = commands.split('');
+export const validateCommands = (commands: string, promptCommands: boolean) => {
+  const commandSplit = commands.split('');
   let passed = true;
-  commands.forEach((letter) => {
-    if (!actions[letter]) {
-      if (promptCommands && !customCommands[letter]) passed = false;
+  commandSplit.forEach((command) => {
+    if (!actions[command]) {
+      if (promptCommands && !customCommands[command]) passed = false;
     }
   });
   return passed;

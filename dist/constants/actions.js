@@ -6,5 +6,5 @@ exports.actions = {
     R: 'Turned Right',
 };
 exports.customCommands = {
-    H: 'Hide Logs'
+    H: 'Hide Logs',
 };

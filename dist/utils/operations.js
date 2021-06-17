@@ -1,61 +1,46 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const ConsoleGrid = require("console-grid");
 const { createMiniMapRows, createMiniMapColumns } = require('../utils/grid');
 const { columns } = require('../constants/logs');
 const { defs } = require('../constants/orientations');
-const ConsoleGrid = require("console-grid");
 const CGS = ConsoleGrid.Style;
 const createRows = (walle) => {
-    let rows = [];
-    let actions = walle.actions;
+    const rows = [];
+    let { actions } = walle;
     if (actions.length > 10) {
         actions = actions.slice(actions.length - 10, actions.length);
     }
-    actions.forEach(action => rows.push(action));
+    actions.forEach((action) => rows.push(action));
     return rows;
 };
 const findPowerMessage = (walle) => {
-    let amount = walle.powerLevel / walle.totalPower;
+    const amount = walle.powerLevel / walle.totalPower;
     if (amount < 0.50 && amount >= 0.2) {
         // warning
-        return CGS.bg.yellow(`${walle.powerLevel} Power Running Low`);
+        return CGS.bg.red(`${walle.powerLevel} Power Running Low`);
     }
-    else if (amount < 0.25 && walle.powerLevel !== 0) {
+    if (amount < 0.25 && walle.powerLevel !== 0) {
         // very low
         return CGS.bg.red(`${walle.powerLevel} Critical Low`);
     }
-    else if (walle.powerLevel === 0) {
+    if (walle.powerLevel === 0) {
         // empty
         return CGS.bg.red('EMPTY');
     }
-    //default 
+    // default
     return walle.powerLevel;
 };
 const findRockMessage = (walle) => {
     if (walle.rockCount === walle.totalRocks) {
-        return CGS.bg.green(`All Rocks Have Been Gathered`);
+        return CGS.bg.green('All Rocks Have Been Gathered');
     }
     return `${walle.rockCount}/${walle.totalRocks}`;
 };
 exports.renderScreen = (walle, grid, miniMap) => {
+    // The space at the top is intended to clear out the previous screen.
+    console.clear();
     console.log(`
-    
-    
-    
-    
-    
-    
-    
-    
-
-
-
-
-
-
-
-
-
     
     ${CGS.red(`
 ╔╦╗╔═╗╦═╗╔═╗  ╦═╗╔═╗╦  ╦╔═╗╦═╗  
@@ -65,8 +50,8 @@ exports.renderScreen = (walle, grid, miniMap) => {
 
     `);
     if (walle.actions.length > 1 && walle.hideLogs !== true) {
-        console.log(`LOGS`);
-        let data = {
+        console.log('LOGS');
+        const data = {
             rows: createRows(walle),
             columns,
         };
@@ -76,7 +61,7 @@ exports.renderScreen = (walle, grid, miniMap) => {
         rows: createMiniMapRows(walle),
         columns: createMiniMapColumns(walle),
     };
-    console.log(`MAP`);
+    console.log('MAP');
     miniMap.render(miniMapData);
     console.log(`Rocks [${CGS.blue(' & ')}] Dirt [${CGS.red(' . ')}] Rover [${CGS.bg.green(` ${defs[walle.orientation].symbol} `)}]`);
     const position = walle.orientation !== 'X' ? `Position: ${CGS.bg.green(` ${walle.position} `)}` : '';

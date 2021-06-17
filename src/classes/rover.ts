@@ -14,7 +14,7 @@ export class Rover {
 
     position: object;
 
-    gridSize: object;
+    gridSize: number[];
 
     grid: object;
 
@@ -59,7 +59,7 @@ export class Rover {
       this.actions.push(moveLog);
     }
 
-    move(action) {
+    move(action: string) {
       const response = this.moveRover(action);
       this.logMove(action, this.position, this.orientation, response.result, response.message);
     }
@@ -88,7 +88,7 @@ export class Rover {
       return { result: true, message };
     }
 
-    turnRover(action) {
+    turnRover(action: string) {
       // Turning Rover Left or Right
       const direction = action === 'R' ? 1 : -1;
       const orientationIndex = order.indexOf(this.orientation);

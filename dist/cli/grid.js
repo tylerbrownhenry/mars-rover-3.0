@@ -16,7 +16,7 @@ function validateGridSize(gridSize) {
         }
         else {
             if (Number(sizes[0]) > 10 || Number(sizes[1]) > 10) {
-                let warn = readlineSync.question('Some features are limited to a smaller grid sizes than what was enter, but you may still continue, would you like to proceed with your entry? [Y]es [N]o');
+                let warn = readlineSync.question('TODO: Fix the bug that makes the grid empty if provide numbers over 10 [Y]es (continue but broken)');
                 if (warn.toLowerCase() !== 'y') {
                     return false;
                 }
