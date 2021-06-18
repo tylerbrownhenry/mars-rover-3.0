@@ -31,10 +31,10 @@ const messages = {
         `),
     askGridSize: () => readlineSync.question(`
   
-        What size grid would you like to explore? 
+        How many points from the point would you like to explore? 
           
         ${CGS.cyan('Please enter 2 numbers for the grid size, seperated by a space.')}
-        ${CGS.cyan('Example: For a 9x9 grid you would enter "9 9".')}
+        ${CGS.cyan('Example: For example to have 5 points N and 5 points E you would enter "5 5".')}
       
         Input: 
         `),
@@ -73,18 +73,28 @@ const askStartingPosition = (walle, grid, miniMap) => {
         askForStartingCommands(askForStartingCommands, walle, grid, miniMap);
     }
 };
-const performCommands = (cb, commands, walle, grid, miniMap) => {
+exports.checkCommands = (cb, commands, walle, grid, miniMap, wait) => {
+    if (commands.length > 0) {
+        exports.performCommands(cb, commands, walle, grid, miniMap, wait);
+    }
+    else {
+        cb(cb, walle, grid, miniMap);
+    }
+};
+exports.performCommands = (cb, commands, walle, grid, miniMap, wait) => {
     // Animate the Rover moving to correct position
     walle.move(commands.shift());
-    renderScreen(walle, grid, miniMap);
-    setTimeout(() => {
-        if (commands.length > 0) {
-            performCommands(cb, commands, walle, grid, miniMap);
-        }
-        else {
-            cb(cb, walle, grid, miniMap);
-        }
-    }, 250);
+    if (grid && miniMap) {
+        renderScreen(walle, grid, miniMap);
+    }
+    if (wait) {
+        setTimeout(() => {
+            exports.checkCommands(cb, commands, walle, grid, miniMap, wait);
+        }, 250);
+    }
+    else {
+        exports.checkCommands(cb, commands, walle, grid, miniMap, wait);
+    }
 };
 const askForStartingCommands = (cb, walle, grid, miniMap) => {
     // Ask what should the Rover do?
@@ -138,7 +148,7 @@ const askForStartingCommands = (cb, walle, grid, miniMap) => {
         cb(cb, walle, grid, miniMap);
     }
     else {
-        performCommands(cb, commands.split(''), walle, grid, miniMap);
+        exports.performCommands(cb, commands.split(''), walle, grid, miniMap, true);
     }
 };
 // TODO: Export functions in these files, so the functions do not ask questions,
@@ -153,8 +163,8 @@ exports.askGridSize = (walle, grid, miniMap) => {
     else {
         // Update Grid With Input
         gridSize = gridSize.split(' ');
-        const x = Number(gridSize[0]);
-        const y = Number(gridSize[1]);
+        const x = Number(gridSize[0]) + 1;
+        const y = Number(gridSize[1]) + 1;
         const totalPower = x * y;
         walle.gridSize = [x, y];
         walle.totalPower = totalPower;

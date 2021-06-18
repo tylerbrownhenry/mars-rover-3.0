@@ -43,10 +43,3 @@ describe('utils.grid.checkEdges', () => {
     assert.equal(resp.result, true);
   });
 });
-
-
-describe('try moving rover', () => {
-  it('moving rover should land on correct position', () => {
-    // would need to reformat prompts file to support
-  });
-});
