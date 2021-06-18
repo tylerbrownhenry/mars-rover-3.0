@@ -145,15 +145,16 @@ const askForStartingCommands = (cb, walle, grid, miniMap) => {
 // so can write tests for them.
 exports.askGridSize = (walle, grid, miniMap) => {
     // Prompt user to enter grid size
-    const gridSize = messages.askGridSize();
+    let gridSize = messages.askGridSize();
     if (!validateGridSize(gridSize)) {
         // Incorrect Input
         exports.askGridSize(walle, grid, miniMap);
     }
     else {
         // Update Grid With Input
+        gridSize = gridSize.split(' ');
         const x = Number(gridSize[0]);
-        const y = Number(gridSize[2]);
+        const y = Number(gridSize[1]);
         const totalPower = x * y;
         walle.gridSize = [x, y];
         walle.totalPower = totalPower;
