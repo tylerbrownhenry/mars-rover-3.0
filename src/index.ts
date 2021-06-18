@@ -3,7 +3,7 @@ import * as express from 'express';
 import * as homePage from './homepage';
 
 const app = express();
-const port = 8080; // default port to listen
+const port = 3000; // default port to listen
 const { Rover } = require('./classes/rover');
 const { intro } = require('./cli/prompts');
 
