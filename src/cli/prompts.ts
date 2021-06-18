@@ -149,10 +149,8 @@ const askForStartingCommands = (cb, walle, grid, miniMap) => {
   }
 };
 
-export const resetWalle = (walle) => {
-
-}
-
+// TODO: Export functions in these files, so the functions do not ask questions,
+// so can write tests for them.
 export const askGridSize = (walle, grid, miniMap) => {
   // Prompt user to enter grid size
   const gridSize = messages.askGridSize();

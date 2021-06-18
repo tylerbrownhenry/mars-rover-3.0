@@ -18,6 +18,12 @@ npm run build && npm run start
 
 Then interact with the terminal, there is no other UI
 
+## Running Tests 
+```shell
+npm run test
+```
+
+
 ## Project structure
 
 ```
