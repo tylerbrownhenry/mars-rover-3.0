@@ -49,7 +49,7 @@ const messages = {
         Follow the prompts below:
 
         `);
-    }
+    },
 };
 const askStartingPosition = (walle, grid, miniMap) => {
     // Where should the rover start?

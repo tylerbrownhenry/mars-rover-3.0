@@ -12,7 +12,7 @@ exports.checkEdges = (gridSize, newPosition) => {
     if (x < 0 || y < 0 || x > maxLat || y > maxLong) {
         return {
             result: false,
-            message: 'Rover was denied an attempted to move outside of the grid.'
+            message: 'Rover was denied an attempted to move outside of the grid.',
         };
     }
     return { result: true, message: 'Inside bounds' };
@@ -24,8 +24,8 @@ exports.createMiniMapColumns = walle => {
             id: 'title',
             name: '',
             maxWidth: 23,
-            type: 'string'
-        }
+            type: 'string',
+        },
     ];
     const max = walle.gridSize[0];
     let i = 0;
@@ -34,7 +34,7 @@ exports.createMiniMapColumns = walle => {
             id: `col_${i}`,
             name: `${i}`,
             maxWidth: 23,
-            type: 'string'
+            type: 'string',
         });
         i++;
     }
@@ -67,7 +67,7 @@ exports.createMiniMapRows = walle => {
     while (i !== max) {
         const thisRow = {
             label: { r: i },
-            maxWidth: 13
+            maxWidth: 13,
         };
         let e = -1;
         while (e !== maxCol) {

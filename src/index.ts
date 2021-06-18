@@ -12,10 +12,10 @@ const miniMap = new ConsoleGrid();
 const grid = new ConsoleGrid();
 
 app.get('/', (req, res) => {
-  res.send(homePage);
+    res.send(homePage);
 });
 
 app.listen(port, () => {
-  console.clear();
-  intro(port, walle, grid, miniMap);
+    console.clear();
+    intro(port, walle, grid, miniMap);
 });

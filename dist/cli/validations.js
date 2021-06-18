@@ -20,7 +20,7 @@ const messages = {
         },
         invalidOrientation: () => {
             console.log(`${CGS.red("Orientation must be one of 4 possible inputs ['N','E','S','W']")}`);
-        }
+        },
     },
     gridSize: {
         tooManyArguments: (gridSize) => {
@@ -29,8 +29,8 @@ const messages = {
         valueTooLow: (gridSize) => {
             console.log(`${CGS.red(`Values most be greater than 0: ${gridSize}`)}`);
         },
-        largeArea: gridSize => readlineSync.question('Some features are limited to a smaller grid sizes than what was enter, but you may still continue, would you like to proceed with your entry? [Y]es [N]o')
-    }
+        largeArea: gridSize => readlineSync.question('Some features are limited to a smaller grid sizes than what was enter, but you may still continue, would you like to proceed with your entry? [Y]es [N]o'),
+    },
 };
 exports.validateStartingPosition = (startingPosition, gridSize) => {
     if (startingPosition.length < 3) {

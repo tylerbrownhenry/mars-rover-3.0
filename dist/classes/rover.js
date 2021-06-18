@@ -30,7 +30,7 @@ class Rover {
             direction: defs[orientation].symbol,
             orientation,
             actionCount: ++this.actionCount,
-            moveCount: this.moveCount
+            moveCount: this.moveCount,
         };
         this.actions.push(moveLog);
     }
@@ -41,10 +41,7 @@ class Rover {
     moveForward() {
         // Moving Rover Forward
         const adjustmentValues = defs[this.orientation].moveForward;
-        const newPosition = [
-            this.position[0] + adjustmentValues[0],
-            this.position[1] + adjustmentValues[1]
-        ];
+        const newPosition = [this.position[0] + adjustmentValues[0], this.position[1] + adjustmentValues[1]];
         const response = utils.checkEdges(this.gridSize, newPosition);
         if (!response.result) {
             return response;
@@ -84,7 +81,7 @@ class Rover {
         }
         return {
             result: true,
-            message: `Rover ${actions[action].toLowerCase()} 90 degrees.`
+            message: `Rover ${actions[action].toLowerCase()} 90 degrees.`,
         };
     }
     moveRover(action) {

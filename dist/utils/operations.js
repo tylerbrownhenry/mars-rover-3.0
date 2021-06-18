@@ -53,20 +53,18 @@ exports.renderScreen = (walle, grid, miniMap) => {
         console.log('LOGS');
         const data = {
             rows: createRows(walle),
-            columns
+            columns,
         };
         grid.render(data);
     }
     const miniMapData = {
         rows: createMiniMapRows(walle),
-        columns: createMiniMapColumns(walle)
+        columns: createMiniMapColumns(walle),
     };
     console.log('MAP');
     miniMap.render(miniMapData);
     console.log(`Rocks [${CGS.blue(' & ')}] Dirt [${CGS.red(' . ')}] Rover [${CGS.bg.green(` ${defs[walle.orientation].symbol} `)}]`);
-    const position = walle.orientation !== 'X'
-        ? `Position: ${CGS.bg.green(` ${walle.position} `)}`
-        : '';
+    const position = walle.orientation !== 'X' ? `Position: ${CGS.bg.green(` ${walle.position} `)}` : '';
     console.log(`
     Rover Orientation: ${defs[walle.orientation].label}
     ${position}
