@@ -1,6 +1,6 @@
 import { strict as assert } from 'assert';
 import {
-  findTerrain, createMiniMapColumns, createMiniMapRows, checkEdges, centerAlign,
+ checkEdges,
 } from '../../src/utils/grid';
 
 describe('utils.grid.checkEdges', () => {
