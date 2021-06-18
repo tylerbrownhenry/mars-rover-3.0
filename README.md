@@ -7,7 +7,7 @@ Testing a CLI that is a themed like a Mars Rover being remotely driven around on
 This has only been ran on a 2021 Macbook Air. 
 
 Note:
-There is no UI for this outside of the terminal, and it seems to work best if you set the window width relatively width and high, but can adjust based on your screen size. And entering a very large number for the gridSize may provide mixed results, but feel feel to try :D 
+There is no UI for this outside of the terminal, and it seems to work best if you set the window width relatively wide and tall, but can adjust based on your screen size. And entering a very large number for the gridSize may provide mixed results, but feel feel to try :D 
 
 
 ## Project setup
@@ -38,7 +38,7 @@ example: to start on the most southwest corner facing notrth enter:
 0 0 N
 ```
 
-Now you may control the rover on the grid, starting at the position you provided using the commands: 'M', 'R', L' to move forward, turn right or turn left respectively. You may provided a single input or a string them one after anoter.
+Now you may control the rover on the grid, starting at the position you provided using the commands: 'M', 'R', L' to move forward, turn right or turn left respectively. You may provide a single input or a string them one after anoter.
 
 example: move forward one position
 
