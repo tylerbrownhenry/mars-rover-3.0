@@ -20,8 +20,7 @@ npm run build && npm run start
 ```
 Ideally make a relatively small grid.
 
-You will be prompted to enter the the number of points from the origin you want
-which you would enter just as 2 numbers separated by a space:
+You will be prompted to enter the the number of points from the origin you want which you would enter just as 2 numbers separated by a space:
 
 example: to have 5 points to the north and 5 points to the east enter:
 
@@ -30,8 +29,8 @@ example: to have 5 points to the north and 5 points to the east enter:
 ```
 
 Next you will be prompted to enter the Rover's starting coordinates and orientation.
-Coordinates are x and y values separated by space, they most be points that are on the grid that was created.
-Coordinations are immediately followed a space then bay the first letter of a cardinal orientation. Valid values are 'N', 'S', 'E' or 'W'.
+Coordinates are x and y values separated by space, they must be points that are on the grid that was created.
+Coordinations are immediately followed a space then the first letter of a cardinal orientation. Valid values are 'N', 'S', 'E' or 'W'.
 
 example: to start on the most southwest corner facing notrth enter:
 
