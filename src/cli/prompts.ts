@@ -5,51 +5,71 @@ const CGS = ConsoleGrid.Style;
 const align = require('align-text');
 const { logo } = require('../constants/terminalLogo');
 const { centerAlign } = require('../utils/grid');
-const { validateStartingPosition, validateCommands, validateGridSize } = require('./validations');
+const {
+  validateStartingPosition,
+  validateCommands,
+  validateGridSize
+} = require('./validations');
 const { renderScreen } = require('../utils/operations');
 
-  //TODO - Move Messages
+//TODO - Move Messages
 const messages = {
-  askStartingPosition: (gridSize) => readlineSync.question(`
+  askStartingPosition: gridSize =>
+    readlineSync.question(`
     
         Where would you like to the Rover's starting coordinates and orientation to be? 
           
-        ${CGS.cyan(`Coordinates can be any value within your current grid with X values of 0-${gridSize[0]}, Y values 0-${gridSize[1]}.`)}
+        ${CGS.cyan(
+          `Coordinates can be any value within your current grid with X values of 0-${gridSize[0]}, Y values 0-${gridSize[1]}.`
+        )}
         ${CGS.cyan('Orientation values can be N, E, S or W.')}
-        ${CGS.cyan('Example: To start on X:0 Y:0 position, facing North, enter: "0 0 N".')}
+        ${CGS.cyan(
+          'Example: To start on X:0 Y:0 position, facing North, enter: "0 0 N".'
+        )}
         
         Input: 
         `),
-  askStartingCommand: () => readlineSync.question(`
+  askStartingCommand: () =>
+    readlineSync.question(`
 
         What would you like the rover to do?
 
-        ${CGS.cyan('[M]ove Forward, Turn [R]ight, Turn [L]eft, [H]ide Logs, Swi[T]ch Rover, [H]ide Logs, [Q]uit')}
+        ${CGS.cyan(
+          '[M]ove Forward, Turn [R]ight, Turn [L]eft, [H]ide Logs, Swi[T]ch Rover, [H]ide Logs, [Q]uit'
+        )}
         ${CGS.cyan('Example: "M" or "MMRMMMRMML"')}
 
         Input:
         `),
-  askGridSize: () => readlineSync.question(`
+  askGridSize: () =>
+    readlineSync.question(`
   
         What size grid would you like to explore? 
           
-        ${CGS.cyan('Please enter 2 numbers for the grid size, seperated by a space.')}
-        ${CGS.cyan('Example: For a 9x9 grid you would enter \"9 9\".')}
+        ${CGS.cyan(
+          'Please enter 2 numbers for the grid size, seperated by a space.'
+        )}
+        ${CGS.cyan('Example: For a 9x9 grid you would enter "9 9".')}
       
         Input: 
         `),
   intro: () => {
-    console.log(align(`${logo}
-        Press any key to continue`, centerAlign));
+    console.log(
+      align(
+        `${logo}
+        Press any key to continue`,
+        centerAlign
+      )
+    );
   },
-  firstSplash: (host) => {
+  firstSplash: host => {
     console.log(`
         You are now connected to the ${CGS.bg.green(' Mars Rover ')}! 
         
         Follow the prompts below:
 
         `);
-  },
+  }
 };
 
 const askStartingPosition = (walle, grid, miniMap) => {
@@ -69,12 +89,17 @@ const askStartingPosition = (walle, grid, miniMap) => {
     }
     walle.grid[Number(pos[0])][Number(pos[1])] = CGS.cyan(' . '); // travelled
     walle.orientation = pos[2];
-    walle.logMove('X', walle.position, walle.orientation, true, 'Landed successfully.');
+    walle.logMove(
+      'X',
+      walle.position,
+      walle.orientation,
+      true,
+      'Landed successfully.'
+    );
     renderScreen(walle, grid, miniMap);
     askForStartingCommands(askForStartingCommands, walle, grid, miniMap);
   }
 };
-
 
 const performCommands = (cb, commands, walle, grid, miniMap) => {
   // Animate the Rover moving to correct position
@@ -95,7 +120,8 @@ const askForStartingCommands = (cb, walle, grid, miniMap) => {
   //TODO - Move
   if (walle.rockCount === walle.totalRocks) {
     /*eslint-disable */
-    const success = readlineSync.question(CGS.bg.green(`
+    const success = readlineSync.question(
+      CGS.bg.green(`
                                                                                                                                                 
         Urgent Message From Houston:                                                                                                            
                                                                                                                                                 
@@ -104,16 +130,18 @@ const askForStartingCommands = (cb, walle, grid, miniMap) => {
         [Q]uit                                                                                                                                  
                                                                                                                                                 
         Input:                                                                                                                                  
-        `));
+        `)
+    );
     /*eslint-enable */
 
     process.exit();
   }
 
- //TODO - Move
+  //TODO - Move
   if (walle.powerLevel === 0) {
     /*eslint-disable */
-    const powerOut = readlineSync.question(`${CGS.bg.red(`
+    const powerOut = readlineSync.question(
+      `${CGS.bg.red(`
   
     Urgent Message From Houston:                                                                                                            
                                                                                                                                                 
@@ -122,7 +150,8 @@ const askForStartingCommands = (cb, walle, grid, miniMap) => {
     [Q]uit                                                                                                                                  
                                                                                                                                                 
     Input:                                                                                                                                  
-    `)}`);
+    `)}`
+    );
     /*eslint-enable */
 
     process.exit();
@@ -136,7 +165,7 @@ const askForStartingCommands = (cb, walle, grid, miniMap) => {
     // Could move these additional validations to the validations files
     console.log(`${CGS.red('Received a blank entry')}`);
     cb(cb, walle, grid, miniMap);
-  } else if(commands.toLowerCase().indexOf('t') > -1) {
+  } else if (commands.toLowerCase().indexOf('t') > -1) {
     // Added last to support requirements
     console.clear();
     walle.powerLevel = walle.totalPower;

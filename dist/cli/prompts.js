@@ -10,7 +10,7 @@ const { validateStartingPosition, validateCommands, validateGridSize } = require
 const { renderScreen } = require('../utils/operations');
 //TODO - Move Messages
 const messages = {
-    askStartingPosition: (gridSize) => readlineSync.question(`
+    askStartingPosition: gridSize => readlineSync.question(`
     
         Where would you like to the Rover's starting coordinates and orientation to be? 
           
@@ -34,7 +34,7 @@ const messages = {
         What size grid would you like to explore? 
           
         ${CGS.cyan('Please enter 2 numbers for the grid size, seperated by a space.')}
-        ${CGS.cyan('Example: For a 9x9 grid you would enter \"9 9\".')}
+        ${CGS.cyan('Example: For a 9x9 grid you would enter "9 9".')}
       
         Input: 
         `),
@@ -42,14 +42,14 @@ const messages = {
         console.log(align(`${logo}
         Press any key to continue`, centerAlign));
     },
-    firstSplash: (host) => {
+    firstSplash: host => {
         console.log(`
         You are now connected to the ${CGS.bg.green(' Mars Rover ')}! 
         
         Follow the prompts below:
 
         `);
-    },
+    }
 };
 const askStartingPosition = (walle, grid, miniMap) => {
     // Where should the rover start?
@@ -141,6 +141,8 @@ const askForStartingCommands = (cb, walle, grid, miniMap) => {
         performCommands(cb, commands.split(''), walle, grid, miniMap);
     }
 };
+// TODO: Export functions in these files, so the functions do not ask questions,
+// so can write tests for them.
 exports.askGridSize = (walle, grid, miniMap) => {
     // Prompt user to enter grid size
     const gridSize = messages.askGridSize();
@@ -150,6 +152,12 @@ exports.askGridSize = (walle, grid, miniMap) => {
     }
     else {
         // Update Grid With Input
+        const x = Number(gridSize[0]);
+        const y = Number(gridSize[2]);
+        const totalPower = x * y;
+        walle.gridSize = [x, y];
+        walle.totalPower = totalPower;
+        walle.powerLevel = totalPower;
         renderScreen(walle, grid, miniMap);
         askStartingPosition(walle, grid, miniMap);
     }
